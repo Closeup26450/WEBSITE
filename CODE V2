@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coming Soon</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background-color: #f0f0f0;
+            overflow: hidden;
+            cursor: none;
+        }
+        .header {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            font-size: 1.5em;
+            font-weight: normal;
+            letter-spacing: 0.025em;
+        }
+        .coming-soon {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+        .cursor-butterfly {
+            position: fixed;
+            width: 200px; /* Increased size */
+            height: 200px; /* Increased size */
+            background-image: url('https://freight.cargo.site/t/original/i/c94b5961e66fdb2b28d04d5f57da78bc24cf8abd3973ed19e2450cab32d6b454/WhatsApp-Image-2025-04-21-at-14.01.32.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            pointer-events: none;
+            z-index: 9999;
+        }
+        .email-text {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            font-size: 1em; /* Smaller font size */
+            text-transform: uppercase; /* Text in caps */
+        }
+        .email-link {
+            color: black; /* Black color */
+            text-decoration: none; /* No underline */
+        }
+    </style>
+</head>
+<body>
+    <div class="header">Close up</div>
+    <div class="coming-soon">Coming Soon</div>
+    <div class="cursor-butterfly" id="cursorButterfly"></div>
+    <div class="email-text">
+        <a href="mailto:contact@closeup.cc" class="email-link">CONTACT@CLOSEUP.CC</a>
+    </div>
+    <script>
+        const cursor = document.getElementById('cursorButterfly');
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.pageX - 100 + 'px'; // Adjusted to center the butterfly cursor
+            cursor.style.top = e.pageY - 100 + 'px'; // Adjusted to center the butterfly cursor
+        });
+    </script>
+</body>
+</html>
