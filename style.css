@@ -84,7 +84,32 @@
         .email-link:hover {
             text-decoration: underline;
         }
-    </style>
+      @media (max-width: 768px) {
+        .slide {
+            width: 100vw;
+            height: auto;
+            max-height: 100vh;
+            object-fit: contain;
+        }
+        .slideshow-container {
+            align-items: flex-start;
+        }
+        .header {
+            font-size: 1.2em;
+        }
+        .coming-soon {
+            font-size: 1.2em;
+            top: 40%;
+        }
+        .email-text {
+            font-size: 0.9em;
+        }
+    }
+        .slideshow-container {
+            align-items: flex-start;
+        }
+    }
+</style>
 </head>
 <body>
     <div class="header">closeup</div>
