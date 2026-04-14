@@ -1,167 +1,226 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Coming Soon</title>
-    <style>
-        body, html {
-            margin: 0;
-            padding: 0;
-            height: 100%;
-            width: 100%;
-            font-family: Arial, sans-serif;
-            text-align: center;
-            background-color: #f0f0f0;
-            overflow: hidden;
-            cursor: none;
-        }
-        .header {
-            position: absolute;
-            top: 10px;
-            left: 20px;
-            font-size: 1.5em;
-            font-weight: normal;
-            letter-spacing: 0.025em;
-            color: rgba(0, 0, 0, 0.8);
-            z-index: 10;
-        }
-        .coming-soon {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 1.5em;
-            color: rgba(255, 255, 255, 0.8);
-            z-index: 10;
-        }
-        .slideshow-container {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            width: 100vw;
-            height: 100vh;
-            overflow: hidden;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        .slide {
-            display: none;
-            width: 100vw;
-            height: 100vh;
-            object-fit: cover;
-            transition: opacity 1s ease;
-        }
-        .slide.active {
-            display: block;
-        }
-        .cursor-butterfly {
-            position: fixed;
-            width: 200px;
-            height: 200px;
-            background-image: url('https://freight.cargo.site/t/original/i/c94b5961e66fdb2b28d04d5f57da78bc24cf8abd3973ed19e2450cab32d6b454/WhatsApp-Image-2025-04-21-at-14.01.32.png');
-            background-size: contain;
-            background-repeat: no-repeat;
-            pointer-events: none;
-            z-index: 9999;
-        }
-        .email-text {
-            position: absolute;
-            bottom: 20px;
-            left: 20px;
-            font-size: 1em;
-            color: black;
-            text-transform: uppercase;
-        }
-        .email-link {
-            color: black;
-            text-decoration: none;
-            transition: all 0.3s ease;
-        }
-        .email-link:hover {
-            text-decoration: underline;
-        }
-      @media (max-width: 768px) {
-        .slide {
-            width: 100vw;
-            height: auto;
-            max-height: 100vh;
-            object-fit: contain;
-        }
-        .slideshow-container {
-            align-items: flex-start;
-        }
-        .header {
-            font-size: 1.2em;
-        }
-        .coming-soon {
-            font-size: 1.2em;
-            top: 40%;
-        }
-        .email-text {
-            font-size: 0.9em;
-        }
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body, html {
+    height: 100%;
+    width: 100%;
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    overflow: hidden;
+    cursor: none;
+}
+
+/* HEADER */
+.header {
+    position: absolute;
+    top: 10px;
+    left: 20px;
+    font-size: 1.5em;
+    font-weight: normal;
+    letter-spacing: 0.025em;
+    color: rgba(0, 0, 0, 0.8);
+    z-index: 10;
+}
+
+/* ABOUT trigger */
+.nav-about {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    font-size: calc(1em + 3px);
+    font-weight: normal;
+    color: black;
+    text-transform: uppercase;
+    z-index: 10;
+    cursor: none;
+}
+
+/* SLIDESHOW */
+.slideshow-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.slide {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover;
+}
+
+.slide.active {
+    display: block;
+}
+
+/* CURSOR */
+.cursor-butterfly {
+    position: fixed;
+    width: 200px;
+    height: 200px;
+    background-image: url('https://freight.cargo.site/t/original/i/c94b5961e66fdb2b28d04d5f57da78bc24cf8abd3973ed19e2450cab32d6b454/WhatsApp-Image-2025-04-21-at-14.01.32.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    pointer-events: none;
+    z-index: 9999;
+    left: -200px;
+    top: -200px;
+}
+
+/* SUMMARY */
+.book-wrap {
+    position: absolute;
+    bottom: 18px;
+    right: 20px;
+    z-index: 20;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.book-trigger {
+    font-size: calc(1em + 3px);
+    font-weight: normal;
+    color: black;
+    text-transform: uppercase;
+    cursor: none;
+    padding-top: 6px;
+}
+
+.accordion {
+    width: 600px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.book-wrap:hover .accordion {
+    max-height: 500px;
+}
+
+.accordion-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    padding: 12px 0 8px;
+}
+
+.acc-num {
+    font-size: 1em;
+    font-weight: normal;
+    color: black;
+    text-align: right;
+    padding: 7px 4px;
+    cursor: none;
+    transition: opacity 0.15s;
+}
+
+.acc-num:hover {
+    opacity: 0.4;
+}
+
+/* ABOUT page */
+.about-page {
+    position: fixed;
+    inset: 0;
+    background: #f0f0f0;
+    z-index: 200;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    cursor: none;
+}
+
+.about-page.active {
+    display: flex;
+}
+
+.about-close {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    font-size: 1em;
+    color: black;
+    text-transform: uppercase;
+    cursor: none;
+}
+
+.about-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6vw;
+}
+
+.about-text {
+    max-width: 95vw;
+    padding: 0 5vw;
+    font-family: Arial, sans-serif;
+    font-size: 5.5vw;
+    font-weight: normal;
+    line-height: 1.2;
+    text-align: center;
+    color: rgba(0, 0, 0, 0.82);
+}
+
+.about-enquiries {
+    text-align: center;
+}
+
+.about-enquiries-label {
+    font-size: 0.85em;
+    color: rgba(0, 0, 0, 0.45);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 2px;
+}
+
+.about-enquiries-email {
+    font-size: 0.85em;
+    color: black;
+    text-transform: uppercase;
+    text-decoration: none;
+}
+
+.about-enquiries-email:hover {
+    text-decoration: underline;
+}
+
+/* RESPONSIVE */
+@media (hover: none) and (orientation: portrait) {
+    .book-wrap:hover .accordion {
+        max-height: 0;
     }
-        .slideshow-container {
-            align-items: flex-start;
-        }
+}
+
+@media (max-width: 768px) {
+    .slide {
+        width: 100vw;
+        height: auto;
+        max-height: 100vh;
+        object-fit: contain;
     }
-</style>
-</head>
-<body>
-    <div class="header">closeup</div>
 
-    <div class="slideshow-container">
-        <img src="https://freight.cargo.site/w/2000/q/75/i/66847329a3d1916ec1b464c15e94f148f7268054a0f508900101e19a3d84407a/DSC_1563.JPG" class="slide active">
-        <img src="https://freight.cargo.site/w/2000/q/75/i/9d36191373a711b65c0eaa86af989d5b507530366581434188eb52228db2db8b/Rosemarie-comme-Rosemarie-final5.jpg" class="slide">
-        <img src="https://freight.cargo.site/w/2000/q/75/i/86ad52f3b1a4180dffcdd86182bb702ea884268166c41c45879b8e2e5e5279ef/20221024_allacarta_020-copy.jpg" class="slide">
-        <div class="coming-soon">coming soon</div>
-    </div>
+    .header {
+        font-size: 1.2em;
+    }
 
-    <div class="cursor-butterfly" id="cursorButterfly"></div>
-    <div class="email-text">
-        <a href="mailto:contact@closeup.cc" class="email-link">CONTACT@CLOSEUP.CC</a>
-    </div>
+    .about-text {
+        font-size: 1.6em;
+        padding: 0 24px;
+    }
 
-    <script>
-        const cursor = document.getElementById('cursorButterfly');
-        document.addEventListener('mousemove', (e) => {
-            cursor.style.left = e.pageX - 100 + 'px';
-            cursor.style.top = e.pageY - 100 + 'px';
-        });
-
-        const slides = document.querySelectorAll('.slide');
-        let current = 0;
-
-        function showSlide(index) {
-            slides.forEach((slide, i) => {
-                slide.classList.remove('active');
-                if (i === index) slide.classList.add('active');
-            });
-        }
-
-        function nextSlide() {
-            current = (current + 1) % slides.length;
-            showSlide(current);
-        }
-
-        setInterval(nextSlide, 5000);
-
-        document.querySelector('.slideshow-container').addEventListener('click', (e) => {
-            const half = window.innerWidth / 2;
-            if (e.clientX > half) {
-                nextSlide();
-            } else {
-                current = (current - 1 + slides.length) % slides.length;
-                showSlide(current);
-            }
-        });
-    </script>
-
-    
-    </script>
-</body>
-</html>
+    .accordion {
+        width: 100vw;
+    }
+}
