@@ -3,165 +3,162 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Coming Soon</title>
-    <style>
-        body, html {
-            margin: 0;
-            padding: 0;
-            height: 100%;
-            width: 100%;
-            font-family: Arial, sans-serif;
-            text-align: center;
-            background-color: #f0f0f0;
-            overflow: hidden;
-            cursor: none;
-        }
-        .header {
-            position: absolute;
-            top: 10px;
-            left: 20px;
-            font-size: 1.5em;
-            font-weight: normal;
-            letter-spacing: 0.025em;
-            color: rgba(0, 0, 0, 0.8);
-            z-index: 10;
-        }
-        .coming-soon {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 1.5em;
-            color: rgba(255, 255, 255, 0.8);
-            z-index: 10;
-        }
-        .slideshow-container {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            width: 100vw;
-            height: 100vh;
-            overflow: hidden;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        .slide {
-            display: none;
-            width: 100vw;
-            height: 100vh;
-            object-fit: cover;
-            transition: opacity 1s ease;
-        }
-        .slide.active {
-            display: block;
-        }
-        .cursor-butterfly {
-            position: fixed;
-            width: 200px;
-            height: 200px;
-            background-image: url('https://freight.cargo.site/t/original/i/c94b5961e66fdb2b28d04d5f57da78bc24cf8abd3973ed19e2450cab32d6b454/WhatsApp-Image-2025-04-21-at-14.01.32.png');
-            background-size: contain;
-            background-repeat: no-repeat;
-            pointer-events: none;
-            z-index: 9999;
-        }
-        .email-text {
-            position: absolute;
-            bottom: 20px;
-            left: 20px;
-            font-size: 1em;
-            color: black;
-            text-transform: uppercase;
-        }
-        .email-link {
-            color: black;
-            text-decoration: none;
-            transition: all 0.3s ease;
-        }
-        .email-link:hover {
-            text-decoration: underline;
-        }
-      @media (max-width: 768px) {
-        .slide {
-            width: 100vw;
-            height: auto;
-            max-height: 100vh;
-            object-fit: contain;
-        }
-        .slideshow-container {
-            align-items: flex-start;
-        }
-        .header {
-            font-size: 1.2em;
-        }
-        .coming-soon {
-            font-size: 1.2em;
-            top: 40%;
-        }
-        .email-text {
-            font-size: 0.9em;
-        }
-    }
-        .slideshow-container {
-            align-items: flex-start;
-        }
-    }
-</style>
+    <title>closeup</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
+ 
     <div class="header">closeup</div>
-
-    <div class="slideshow-container">
+    <div class="nav-about" id="navAbout">About</div>
+ 
+    <div class="slideshow-container" id="slideshowContainer">
         <img src="https://freight.cargo.site/w/2000/q/75/i/66847329a3d1916ec1b464c15e94f148f7268054a0f508900101e19a3d84407a/DSC_1563.JPG" class="slide active">
         <img src="https://freight.cargo.site/w/2000/q/75/i/9d36191373a711b65c0eaa86af989d5b507530366581434188eb52228db2db8b/Rosemarie-comme-Rosemarie-final5.jpg" class="slide">
         <img src="https://freight.cargo.site/w/2000/q/75/i/86ad52f3b1a4180dffcdd86182bb702ea884268166c41c45879b8e2e5e5279ef/20221024_allacarta_020-copy.jpg" class="slide">
-        <div class="coming-soon">coming soon</div>
     </div>
-
+ 
+    <div class="about-page" id="aboutPage">
+        <div class="about-close" id="aboutClose">Close</div>
+        <div class="about-content">
+            <p class="about-text">Closeup is a duo of photographers and filmmakers.</p>
+            <div class="about-enquiries">
+                <div class="about-enquiries-label">Enquiries and commissions</div>
+                <a href="mailto:contact@closeup.cc" class="about-enquiries-email">CONTACT@CLOSEUP.CC</a>
+            </div>
+        </div>
+    </div>
+ 
     <div class="cursor-butterfly" id="cursorButterfly"></div>
-    <div class="email-text">
-        <a href="mailto:contact@closeup.cc" class="email-link">CONTACT@CLOSEUP.CC</a>
+ 
+    <div class="book-wrap">
+        <div class="accordion">
+            <div class="accordion-grid" id="accordionGrid"></div>
+        </div>
+        <div class="book-trigger">Summary</div>
     </div>
-
+ 
     <script>
-        const cursor = document.getElementById('cursorButterfly');
-        document.addEventListener('mousemove', (e) => {
-            cursor.style.left = e.pageX - 100 + 'px';
-            cursor.style.top = e.pageY - 100 + 'px';
-        });
-
+        const slideImgs = [
+            'https://freight.cargo.site/w/2000/q/75/i/66847329a3d1916ec1b464c15e94f148f7268054a0f508900101e19a3d84407a/DSC_1563.JPG',
+            'https://freight.cargo.site/w/2000/q/75/i/9d36191373a711b65c0eaa86af989d5b507530366581434188eb52228db2db8b/Rosemarie-comme-Rosemarie-final5.jpg',
+            'https://freight.cargo.site/w/2000/q/75/i/86ad52f3b1a4180dffcdd86182bb702ea884268166c41c45879b8e2e5e5279ef/20221024_allacarta_020-copy.jpg'
+        ];
+ 
         const slides = document.querySelectorAll('.slide');
         let current = 0;
-
+        let hovering = false;
+ 
         function showSlide(index) {
-            slides.forEach((slide, i) => {
-                slide.classList.remove('active');
-                if (i === index) slide.classList.add('active');
-            });
+            slides.forEach((s, i) => s.classList.toggle('active', i === index));
         }
-
+ 
         function nextSlide() {
+            if (hovering) return;
             current = (current + 1) % slides.length;
             showSlide(current);
         }
-
+ 
         setInterval(nextSlide, 5000);
-
-        document.querySelector('.slideshow-container').addEventListener('click', (e) => {
-            const half = window.innerWidth / 2;
-            if (e.clientX > half) {
-                nextSlide();
+ 
+        document.getElementById('slideshowContainer').addEventListener('click', (e) => {
+            if (e.clientX > window.innerWidth / 2) {
+                current = (current + 1) % slides.length;
             } else {
                 current = (current - 1 + slides.length) % slides.length;
-                showSlide(current);
             }
+            showSlide(current);
+        });
+ 
+        function setSlide(src) {
+            hovering = true;
+            slides.forEach(s => s.classList.remove('active'));
+            let matched = false;
+            slides.forEach(s => { if (s.src === src) { s.classList.add('active'); matched = true; } });
+            if (!matched) { slides[0].src = src; slides[0].classList.add('active'); }
+        }
+ 
+        function restoreSlide() {
+            hovering = false;
+            slides[0].src = slideImgs[0];
+            slides[1].src = slideImgs[1];
+            slides[2].src = slideImgs[2];
+            showSlide(current);
+        }
+ 
+        function isTouchPortrait() {
+            return window.matchMedia('(hover: none) and (orientation: portrait)').matches;
+        }
+ 
+        const grid = document.getElementById('accordionGrid');
+        const bookWrap = document.querySelector('.book-wrap');
+        const accordion = document.querySelector('.accordion');
+        const bookTrigger = document.querySelector('.book-trigger');
+        let accordionOpen = false;
+ 
+        const filmNums = new Set([4, 17, 34, 47]);
+        const assigned = [];
+        for (let i = 0; i < 50; i++) {
+            assigned.push(slideImgs[Math.floor(Math.random() * slideImgs.length)]);
+        }
+ 
+        for (let i = 0; i < 50; i++) {
+            const num = document.createElement('div');
+            num.className = 'acc-num';
+            const n = i + 1;
+            const label = String(n).padStart(2, '0');
+            num.textContent = filmNums.has(n) ? 'Film ' + label : label;
+            const src = assigned[i];
+            if (isTouchPortrait()) {
+                num.addEventListener('click', (e) => { e.stopPropagation(); setSlide(src); });
+            } else {
+                num.addEventListener('mouseenter', () => setSlide(src));
+                num.addEventListener('mouseleave', () => restoreSlide());
+            }
+            grid.appendChild(num);
+        }
+ 
+        if (isTouchPortrait()) {
+            bookTrigger.addEventListener('click', (e) => {
+                e.stopPropagation();
+                accordionOpen = !accordionOpen;
+                accordion.style.maxHeight = accordionOpen ? '500px' : '0';
+                if (!accordionOpen) restoreSlide();
+            });
+            document.addEventListener('click', (e) => {
+                if (!bookWrap.contains(e.target) && accordionOpen) {
+                    accordionOpen = false;
+                    accordion.style.maxHeight = '0';
+                    restoreSlide();
+                }
+            });
+        }
+ 
+        const aboutPage = document.getElementById('aboutPage');
+        const navAbout = document.getElementById('navAbout');
+ 
+        if (isTouchPortrait()) {
+            navAbout.addEventListener('click', () => aboutPage.classList.toggle('active'));
+        } else {
+            navAbout.addEventListener('mouseenter', () => aboutPage.classList.add('active'));
+            navAbout.addEventListener('mouseleave', (e) => {
+                if (!aboutPage.contains(e.relatedTarget)) aboutPage.classList.remove('active');
+            });
+            aboutPage.addEventListener('mouseleave', (e) => {
+                if (!navAbout.contains(e.relatedTarget)) aboutPage.classList.remove('active');
+            });
+        }
+ 
+        document.getElementById('aboutClose').addEventListener('mouseenter', () => {
+            aboutPage.classList.remove('active');
+        });
+ 
+        const cursor = document.getElementById('cursorButterfly');
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = (e.clientX - 100) + 'px';
+            cursor.style.top = (e.clientY - 100) + 'px';
         });
     </script>
-
-    
-    </script>
+ 
 </body>
 </html>
+ 
