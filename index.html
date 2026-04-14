@@ -4,7 +4,35 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>closeup</title>
-    <link rel="stylesheet" href="style.css">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        body, html { height: 100%; width: 100%; font-family: Arial, sans-serif; background-color: #f0f0f0; overflow: hidden; cursor: none; }
+        .header { position: absolute; top: 10px; left: 20px; font-size: 1.5em; font-weight: normal; letter-spacing: 0.025em; color: rgba(0,0,0,0.8); z-index: 10; }
+        .nav-about { position: absolute; bottom: 20px; left: 20px; font-size: calc(1em + 3px); font-weight: normal; color: black; text-transform: uppercase; z-index: 10; cursor: none; }
+        .slideshow-container { position: absolute; top: 0; left: 0; right: 0; bottom: 0; width: 100vw; height: 100vh; overflow: hidden; }
+        .slide { display: none; position: absolute; top: 0; left: 0; width: 100vw; height: 100vh; object-fit: cover; }
+        .slide.active { display: block; }
+        .cursor-butterfly { position: fixed; width: 200px; height: 200px; background-image: url('https://freight.cargo.site/t/original/i/c94b5961e66fdb2b28d04d5f57da78bc24cf8abd3973ed19e2450cab32d6b454/WhatsApp-Image-2025-04-21-at-14.01.32.png'); background-size: contain; background-repeat: no-repeat; pointer-events: none; z-index: 9999; left: -200px; top: -200px; }
+        .book-wrap { position: absolute; bottom: 18px; right: 20px; z-index: 20; display: flex; flex-direction: column; align-items: flex-end; }
+        .book-trigger { font-size: calc(1em + 3px); font-weight: normal; color: black; text-transform: uppercase; cursor: none; padding-top: 6px; }
+        .accordion { width: 1120px; max-height: 0; overflow: hidden; transition: max-height 0.45s cubic-bezier(0.4, 0, 0.2, 1); }
+        .book-wrap:hover .accordion { max-height: 700px; }
+        @media (hover: none) and (orientation: portrait) { .book-wrap:hover .accordion { max-height: 0; } }
+        .accordion-grid { display: grid; grid-template-columns: repeat(5, 200px); padding: 12px 0 8px; gap: 0 24px; }
+        .acc-num { font-size: calc(1em + 20px); font-weight: normal; color: black; text-align: right; white-space: nowrap; padding: 7px 4px; cursor: none; transition: opacity 0.15s; }
+        .acc-num:hover { opacity: 0.4; }
+        @media (max-width: 500px) { .accordion { width: 100vw; } .accordion-grid { grid-template-columns: repeat(5, 1fr); gap: 0 6px; } .acc-num { font-size: 0.8em; padding: 5px 2px; white-space: nowrap; } }
+        .about-page { position: fixed; inset: 0; background: #f0f0f0; z-index: 200; display: none; align-items: center; justify-content: center; cursor: none; }
+        .about-page.active { display: flex; }
+        .about-close { position: absolute; top: 10px; right: 20px; font-size: 1em; color: black; text-transform: uppercase; cursor: none; }
+        .about-content { display: flex; flex-direction: column; align-items: center; gap: 6vw; }
+        .about-text { max-width: 95vw; padding: 0 5vw; font-family: Arial, sans-serif; font-size: 5.5vw; font-weight: normal; line-height: 1.2; text-align: center; color: rgba(0,0,0,0.82); }
+        .about-enquiries { text-align: center; }
+        .about-enquiries-label { font-size: 0.85em; color: rgba(0,0,0,0.45); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 2px; }
+        .about-enquiries-email { font-size: 0.85em; color: black; text-transform: uppercase; text-decoration: none; }
+        .about-enquiries-email:hover { text-decoration: underline; }
+        @media (max-width: 768px) { .slide { width: 100vw; height: auto; max-height: 100vh; object-fit: contain; } .header { font-size: 1.2em; } .about-text { font-size: 1.6em; padding: 0 24px; } .accordion { width: 100vw; } }
+    </style>
 </head>
 <body>
  
@@ -30,26 +58,26 @@
  
     <div class="cursor-butterfly" id="cursorButterfly"></div>
  
-    <div class="book-wrap">
-        <div class="accordion">
+    <div class="book-wrap" id="bookWrap">
+        <div class="accordion" id="accordion">
             <div class="accordion-grid" id="accordionGrid"></div>
         </div>
-        <div class="book-trigger">Summary</div>
+        <div class="book-trigger" id="bookTrigger">Summary</div>
     </div>
  
     <script>
-        const slideImgs = [
+        var slideImgs = [
             'https://freight.cargo.site/w/2000/q/75/i/66847329a3d1916ec1b464c15e94f148f7268054a0f508900101e19a3d84407a/DSC_1563.JPG',
             'https://freight.cargo.site/w/2000/q/75/i/9d36191373a711b65c0eaa86af989d5b507530366581434188eb52228db2db8b/Rosemarie-comme-Rosemarie-final5.jpg',
             'https://freight.cargo.site/w/2000/q/75/i/86ad52f3b1a4180dffcdd86182bb702ea884268166c41c45879b8e2e5e5279ef/20221024_allacarta_020-copy.jpg'
         ];
  
-        const slides = document.querySelectorAll('.slide');
-        let current = 0;
-        let hovering = false;
+        var slides = document.querySelectorAll('.slide');
+        var current = 0;
+        var hovering = false;
  
         function showSlide(index) {
-            slides.forEach((s, i) => s.classList.toggle('active', i === index));
+            slides.forEach(function(s, i) { s.classList.toggle('active', i === index); });
         }
  
         function nextSlide() {
@@ -60,7 +88,7 @@
  
         setInterval(nextSlide, 5000);
  
-        document.getElementById('slideshowContainer').addEventListener('click', (e) => {
+        document.getElementById('slideshowContainer').addEventListener('click', function(e) {
             if (e.clientX > window.innerWidth / 2) {
                 current = (current + 1) % slides.length;
             } else {
@@ -71,9 +99,9 @@
  
         function setSlide(src) {
             hovering = true;
-            slides.forEach(s => s.classList.remove('active'));
-            let matched = false;
-            slides.forEach(s => { if (s.src === src) { s.classList.add('active'); matched = true; } });
+            slides.forEach(function(s) { s.classList.remove('active'); });
+            var matched = false;
+            slides.forEach(function(s) { if (s.src === src) { s.classList.add('active'); matched = true; } });
             if (!matched) { slides[0].src = src; slides[0].classList.add('active'); }
         }
  
@@ -89,42 +117,43 @@
             return window.matchMedia('(hover: none) and (orientation: portrait)').matches;
         }
  
-        const grid = document.getElementById('accordionGrid');
-        const bookWrap = document.querySelector('.book-wrap');
-        const accordion = document.querySelector('.accordion');
-        const bookTrigger = document.querySelector('.book-trigger');
-        let accordionOpen = false;
- 
-        const filmNums = new Set([4, 17, 34, 47]);
-        const assigned = [];
-        for (let i = 0; i < 50; i++) {
+        var grid = document.getElementById('accordionGrid');
+        var bookWrap = document.getElementById('bookWrap');
+        var accordion = document.getElementById('accordion');
+        var bookTrigger = document.getElementById('bookTrigger');
+        var accordionOpen = false;
+        var filmNums = [4, 17, 34, 47];
+        var assigned = [];
+        for (var i = 0; i < 50; i++) {
             assigned.push(slideImgs[Math.floor(Math.random() * slideImgs.length)]);
         }
  
-        for (let i = 0; i < 50; i++) {
-            const num = document.createElement('div');
-            num.className = 'acc-num';
-            const n = i + 1;
-            const label = String(n).padStart(2, '0');
-            num.textContent = filmNums.has(n) ? 'Film ' + label : label;
-            const src = assigned[i];
-            if (isTouchPortrait()) {
-                num.addEventListener('click', (e) => { e.stopPropagation(); setSlide(src); });
-            } else {
-                num.addEventListener('mouseenter', () => setSlide(src));
-                num.addEventListener('mouseleave', () => restoreSlide());
-            }
-            grid.appendChild(num);
+        for (var i = 0; i < 50; i++) {
+            (function(index) {
+                var num = document.createElement('div');
+                num.className = 'acc-num';
+                var n = index + 1;
+                var label = String(n).padStart(2, '0');
+                num.textContent = filmNums.indexOf(n) !== -1 ? 'Film ' + label : label;
+                var src = assigned[index];
+                if (isTouchPortrait()) {
+                    num.addEventListener('click', function(e) { e.stopPropagation(); setSlide(src); });
+                } else {
+                    num.addEventListener('mouseenter', function() { setSlide(src); });
+                    num.addEventListener('mouseleave', function() { restoreSlide(); });
+                }
+                grid.appendChild(num);
+            })(i);
         }
  
         if (isTouchPortrait()) {
-            bookTrigger.addEventListener('click', (e) => {
+            bookTrigger.addEventListener('click', function(e) {
                 e.stopPropagation();
                 accordionOpen = !accordionOpen;
-                accordion.style.maxHeight = accordionOpen ? '500px' : '0';
+                accordion.style.maxHeight = accordionOpen ? '700px' : '0';
                 if (!accordionOpen) restoreSlide();
             });
-            document.addEventListener('click', (e) => {
+            document.addEventListener('click', function(e) {
                 if (!bookWrap.contains(e.target) && accordionOpen) {
                     accordionOpen = false;
                     accordion.style.maxHeight = '0';
@@ -133,27 +162,27 @@
             });
         }
  
-        const aboutPage = document.getElementById('aboutPage');
-        const navAbout = document.getElementById('navAbout');
+        var aboutPage = document.getElementById('aboutPage');
+        var navAbout = document.getElementById('navAbout');
  
         if (isTouchPortrait()) {
-            navAbout.addEventListener('click', () => aboutPage.classList.toggle('active'));
+            navAbout.addEventListener('click', function() { aboutPage.classList.toggle('active'); });
         } else {
-            navAbout.addEventListener('mouseenter', () => aboutPage.classList.add('active'));
-            navAbout.addEventListener('mouseleave', (e) => {
+            navAbout.addEventListener('mouseenter', function() { aboutPage.classList.add('active'); });
+            navAbout.addEventListener('mouseleave', function(e) {
                 if (!aboutPage.contains(e.relatedTarget)) aboutPage.classList.remove('active');
             });
-            aboutPage.addEventListener('mouseleave', (e) => {
+            aboutPage.addEventListener('mouseleave', function(e) {
                 if (!navAbout.contains(e.relatedTarget)) aboutPage.classList.remove('active');
             });
         }
  
-        document.getElementById('aboutClose').addEventListener('mouseenter', () => {
+        document.getElementById('aboutClose').addEventListener('mouseenter', function() {
             aboutPage.classList.remove('active');
         });
  
-        const cursor = document.getElementById('cursorButterfly');
-        document.addEventListener('mousemove', (e) => {
+        var cursor = document.getElementById('cursorButterfly');
+        document.addEventListener('mousemove', function(e) {
             cursor.style.left = (e.clientX - 100) + 'px';
             cursor.style.top = (e.clientY - 100) + 'px';
         });
