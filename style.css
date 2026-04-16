@@ -3,16 +3,16 @@
     margin: 0;
     padding: 0;
 }
- 
+
 body, html {
     height: 100%;
     width: 100%;
     font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
+    background-color: #ffffff;
     overflow: hidden;
     cursor: none;
 }
- 
+
 .header {
     position: absolute;
     top: 10px;
@@ -23,7 +23,7 @@ body, html {
     color: rgba(0, 0, 0, 0.8);
     z-index: 10;
 }
- 
+
 .nav-about {
     position: absolute;
     bottom: 20px;
@@ -35,32 +35,24 @@ body, html {
     z-index: 10;
     cursor: none;
 }
- 
-.slideshow-container {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    width: 100vw;
-    height: 100vh;
-    overflow: hidden;
-}
- 
-.slide {
-    display: none;
-    position: absolute;
+
+.bg-image {
+    position: fixed;
     top: 0;
     left: 0;
     width: 100vw;
     height: 100vh;
     object-fit: cover;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+    z-index: 0;
 }
- 
-.slide.active {
-    display: block;
+
+.bg-image.visible {
+    opacity: 1;
 }
- 
+
 .cursor-butterfly {
     position: fixed;
     width: 200px;
@@ -73,7 +65,7 @@ body, html {
     left: -200px;
     top: -200px;
 }
- 
+
 .book-wrap {
     position: absolute;
     bottom: 18px;
@@ -83,7 +75,7 @@ body, html {
     flex-direction: column;
     align-items: flex-end;
 }
- 
+
 .book-trigger {
     font-size: calc(1em + 3px);
     font-weight: normal;
@@ -92,85 +84,78 @@ body, html {
     cursor: none;
     padding-top: 6px;
 }
- 
+
 .accordion {
     width: 1120px;
     max-height: 0;
     overflow: hidden;
     transition: max-height 0.45s cubic-bezier(0.4, 0, 0.2, 1);
 }
- 
+
 .book-wrap:hover .accordion {
-    max-height: 600px;
+    max-height: 700px;
 }
- 
+
+@media (hover: none) and (orientation: portrait) {
+    .book-wrap:hover .accordion {
+        max-height: 0;
+    }
+}
+
 .accordion-grid {
     display: grid;
     grid-template-columns: repeat(5, 200px);
     padding: 12px 0 8px;
     gap: 0 24px;
 }
- 
+
 .acc-num {
     font-size: calc(1em + 20px);
-    white-space: nowrap;
     font-weight: normal;
     color: black;
     text-align: right;
+    white-space: nowrap;
     padding: 7px 4px;
     cursor: none;
     transition: opacity 0.15s;
 }
- 
+
 .acc-num:hover {
     opacity: 0.4;
 }
- 
-@media (max-width: 500px) {
-    .accordion {
-        width: 100vw;
-    }
-    .accordion-grid {
-        gap: 0 6px;
-    }
-    .acc-num {
-        font-size: 0.8em;
-        padding: 5px 2px;
-    }
-}
- 
+
 .about-page {
     position: fixed;
     inset: 0;
-    background: #f0f0f0;
+    background: #ffffff;
     z-index: 200;
     display: none;
     align-items: center;
     justify-content: center;
     cursor: none;
 }
- 
+
 .about-page.active {
     display: flex;
 }
- 
+
 .about-close {
     position: absolute;
     top: 10px;
     right: 20px;
-    font-size: 1em;
+    font-size: calc(1em + 3px);
     color: black;
     text-transform: uppercase;
     cursor: none;
 }
- 
+
 .about-content {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 6vw;
 }
- 
+
 .about-text {
     max-width: 95vw;
     padding: 0 5vw;
@@ -181,52 +166,43 @@ body, html {
     text-align: center;
     color: rgba(0, 0, 0, 0.82);
 }
- 
+
 .about-enquiries {
     text-align: center;
 }
- 
+
 .about-enquiries-label {
-    font-size: 0.8em;
+    font-size: 0.85em;
     color: rgba(0, 0, 0, 0.45);
     text-transform: uppercase;
     letter-spacing: 0.05em;
     margin-bottom: 2px;
 }
- 
+
 .about-enquiries-email {
-    font-size: 0.8em;
+    font-size: 0.85em;
     color: black;
     text-transform: uppercase;
     text-decoration: none;
 }
- 
+
 .about-enquiries-email:hover {
     text-decoration: underline;
 }
- 
-@media (hover: none) and (orientation: portrait) {
-    .book-wrap:hover .accordion {
-        max-height: 0;
-    }
-}
- 
+
 @media (max-width: 768px) {
-    .slide {
-        width: 100vw;
-        height: auto;
-        max-height: 100vh;
-        object-fit: contain;
-    }
-    .header {
-        font-size: 1.2em;
-    }
-    .about-text {
-        font-size: 1.6em;
-        padding: 0 24px;
-    }
-    .accordion {
-        width: 100vw;
-    }
+    .header { font-size: 1.2em; }
+    .about-text { font-size: 1.6em; padding: 0 24px; }
+    .accordion { width: 100vw; }
 }
- 
+
+@media (max-width: 500px) {
+    .accordion { width: 100vw; }
+    .accordion-grid { grid-template-columns: repeat(5, 1fr); gap: 0 4px; }
+    .acc-num { font-size: 0.65em; padding: 4px 2px; white-space: nowrap; }
+    .cursor-butterfly { width: 100px; height: 100px; }
+    .nav-about { font-size: 12px; padding: 12px 0; z-index: 30; }
+    .book-trigger { font-size: 12px; padding: 12px 0; }
+    .book-wrap { right: 10px; bottom: 10px; }
+    .about-close { font-size: 12px; }
+}
